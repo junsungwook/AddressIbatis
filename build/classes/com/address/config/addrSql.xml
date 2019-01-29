@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+	<!--insert  -->
+	<insert id="insertData" parameterClass="com.address.model.AddressVO">
+		insert into addressdb values(addressdb_seq.nextval,#name#,#addr#,#zipcode#,#tel#)
+	</insert>
+	<!--select  -->
+	
+	<!--update  -->
+	
+	
+</sqlMap>
