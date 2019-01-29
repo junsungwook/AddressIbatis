@@ -4,13 +4,56 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap>
-	<!--insert  -->
-	<insert id="insertData" parameterClass="com.address.model.AddressVO">
-		insert into addressdb values(addressdb_seq.nextval,#name#,#addr#,#zipcode#,#tel#)
-	</insert>
-	<!--select  -->
-	
-	<!--update  -->
-	
+<typeAlias alias="avo" type="com.address.model.AddressVO"/>
+<typeAlias alias="zvo" type="com.address.model.ZipcodeVO"/>
+
+<!-- zipCheck -->
+<select id="zipData" parameterClass="String" resultClass="zvo">
+	<!-- select * from zipcode where dong like '%'||#dong#||'%'  -->
+	select * from zipcode where dong like '%$dong$%'
+	<!-- #변수# 는 쿼리문에 들어갈 때 ''를 포함하고 들어가고 $변수$는 ''를 생략하고 들어간다 -->
+</select>
+<!-- delete -->
+<delete id="deleteData" parameterClass="Integer">
+	delete from addressdb where num=#num#
+</delete>
+<!--insert  -->
+<insert id="insertData" parameterClass="avo">
+	insert into addressdb values(addressdb_seq.nextval,#name#,#addr#,#zipcode#,#tel#)
+</insert>
+
+<!--일부 select  -->
+<select id="searchData" resultClass="avo" parameterClass="HashMap">
+	select * from addressdb where 
+	<isEqual property="field" compareValue="name">
+	name like '%'||#word#||'%'
+	</isEqual>
+	<isEqual property="field" compareValue="tel">
+	tel like '%'||#word#||'%'
+	</isEqual>
+</select>
+
+<!--all select  -->
+<select id="listData" resultClass="avo">
+	select * from addressdb
+</select>
+
+
+<!-- 상세보기 -->
+<select id="viewData" resultClass="avo" parameterClass="Integer">
+	select * from addressdb where num=#num#
+</select>
+
+
+<!-- count -->
+<select id="countData" resultClass="Integer">
+	select count(*) from addressdb
+</select>
+
+
+<!--update  -->
+	<update id="updateData" parameterClass="avo">
+		update addressdb set name=#name#, addr=#addr#, zipcode=#zipcode#, tel=#tel# where num=#num#
+	</update>
 	
 </sqlMap>
