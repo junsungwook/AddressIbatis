@@ -56,7 +56,6 @@ public class SearchAction extends HttpServlet {
 				obj.put("zipcode",z.getZipcode());
 				obj.put("tel",z.getTel());
 				jarr.add(obj);
-				
 			}
 			
 		} catch (SQLException e) {
